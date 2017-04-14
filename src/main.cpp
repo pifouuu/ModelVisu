@@ -139,13 +139,13 @@ int main(){
 
 
 
-	std::string basedir = "../myTexplore/modelTest/";
+	std::string basedir = "../myTexplore/resultats_3/";
 //	std::string basedir = "/home/pierre/Dropbox/resultats/";
 	std::vector<std::string> dirnames;
-//	dirnames.push_back("12-04-2017_14-09-27_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
-//	dirnames.push_back("12-04-2017_13-58-36_v_0_n_0_tb_0_pretrain_10000_fR_0_nbR_0_nbB_1/");
+	dirnames.push_back("14-04-2017_11-31-35_2__v_0_n_0_tb_0_pretrain_0_fR_100_nbR_0_nbB_1/");
+	dirnames.push_back("14-04-2017_11-32-31_2__v_0_n_0_tb_0_pretrain_0_fR_0_nbR_0_nbB_1/");
 //	dirnames.push_back("12-04-2017_16-45-09_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
-	dirnames.push_back("13-04-2017_12-46-01_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
+//	dirnames.push_back("13-04-2017_12-46-01_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
 //	dirnames.push_back("08-04-2017_05-53-21_v_10_n_30_tb_10_pretrain_1000_fR_100_nbR_1_nbB_0/");
 //	dirnames.push_back("08-04-2017_07-35-04_v_10_n_30_tb_30_pretrain_1000_fR_100_nbR_1_nbB_0/");
 //	dirnames.push_back("08-04-2017_09-16-31_v_10_n_30_tb_50_pretrain_1000_fR_100_nbR_1_nbB_0/");
@@ -174,7 +174,7 @@ int main(){
 
 
 	for (int i=0; i<NUMACTIONS; i++){
-		gp << "set xrange [-10000:1000]\nset yrange [0:1]\n";
+		gp << "set xrange [0:1000]\nset yrange [0:1]\n";
 		gp << "set title '" << actions[i] << "'\n";
 		gp << "set terminal x11 "<< i <<" \n";
 		gp << "plot";
@@ -209,7 +209,7 @@ int main(){
 		gp << std::endl;
 	}
 
-	gp << "set xrange [-10000:1000]\nset yrange [0:1]\n";
+	gp << "set xrange [0:1000]\nset yrange [0:1]\n";
 	gp << "set title 'global model'\n";
 	gp << "set terminal x11 "<< NUMACTIONS <<" \n";
 	gp << "plot";
@@ -253,7 +253,7 @@ int main(){
 	gp << std::endl;
 
 
-	gp << "set xrange [-10000:10000]\nset yrange [0:1]\n";
+	gp << "set xrange [0:10000]\nset yrange [0:1]\n";
 	gp << "set title 'Reward model error'\n";
 	gp << "set terminal x11 "<< NUMACTIONS+1 <<" \n";
 	gp << "plot";
@@ -288,7 +288,7 @@ int main(){
 
 
 	for (int i=0; i<numComp; i++){
-		gp << "set xrange [-10000:1000]\nset yrange [0:1]\n";
+		gp << "set xrange [0:1000]\nset yrange [0:1]\n";
 		gp << "set title 'component "+std::to_string(i)+"'\n";
 		gp << "set terminal x11 "<< NUMACTIONS+1+i <<" \n";
 		gp << "plot";
