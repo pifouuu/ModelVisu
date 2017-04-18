@@ -82,7 +82,12 @@ std::vector<float> avg_smooth(std::vector<float>& raw, int ws){
 int main(){
 	Gnuplot gp;
 	std::vector<std::string> actions;
-	actions.push_back(std::string("GO_TO_EYE"));
+	actions.push_back(std::string("NORTH"));
+	actions.push_back(std::string("SOUTH"));
+	actions.push_back(std::string("EAST"));
+	actions.push_back(std::string("WEST"));
+
+//	actions.push_back(std::string("GO_TO_EYE"));
 	actions.push_back(std::string("LOOK_RED_BOX"));
 	actions.push_back(std::string("LOOK_BLUE_BOX"));
 	actions.push_back(std::string("PICK"));
@@ -90,8 +95,8 @@ int main(){
 	actions.push_back(std::string("PUT_IN"));
 //	actions.push_back(std::string("LOOK_RED_BLOCK_0"));
 //	actions.push_back(std::string("LOOK_RED_BLOCK_1"));
-	actions.push_back(std::string("LOOK_BLUE_BLOCK_0"));
-	//actions.push_back(std::string("LOOK_BLUE_BLOCK_1"));
+	actions.push_back(std::string("LOOK_BLUE_BLOCKS"));
+	actions.push_back(std::string("LOOK_RED_BLOCKS"));
 	//actions.push_back(std::string("LOOK_BLUE_BLOCK_2"));
 	int NUMACTIONS = actions.size();
 
@@ -139,16 +144,15 @@ int main(){
 
 
 
-	std::string basedir = "../myTexplore/resultats_3/";
+	std::string basedir = "../myTexplore/resultats_4/";
 //	std::string basedir = "/home/pierre/Dropbox/resultats/";
 	std::vector<std::string> dirnames;
-	dirnames.push_back("14-04-2017_11-31-35_2__v_0_n_0_tb_0_pretrain_0_fR_100_nbR_0_nbB_1/");
-	dirnames.push_back("14-04-2017_11-32-31_2__v_0_n_0_tb_0_pretrain_0_fR_0_nbR_0_nbB_1/");
-//	dirnames.push_back("12-04-2017_16-45-09_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
-//	dirnames.push_back("13-04-2017_12-46-01_v_0_n_0_tb_0_pretrain_10000_fR_100_nbR_0_nbB_1/");
-//	dirnames.push_back("08-04-2017_05-53-21_v_10_n_30_tb_10_pretrain_1000_fR_100_nbR_1_nbB_0/");
-//	dirnames.push_back("08-04-2017_07-35-04_v_10_n_30_tb_30_pretrain_1000_fR_100_nbR_1_nbB_0/");
-//	dirnames.push_back("08-04-2017_09-16-31_v_10_n_30_tb_50_pretrain_1000_fR_100_nbR_1_nbB_0/");
+	dirnames.push_back("17-04-2017_18-36-31_2__v_0_n_0_tb_0_pretrain_0_fR_100_nbR_2_nbB_1_nmodels_1_batch_1_steps_2001/");
+//	dirnames.push_back("16-04-2017_12-12-08_2__v_0_n_0_tb_0_pretrain_0_fR_100_nbR_2_nbB_1_nmodels_2_batch_1_steps_2001/");
+//	dirnames.push_back("16-04-2017_14-05-15_2__v_0_n_0_tb_0_pretrain_100_fR_100_nbR_2_nbB_1_nmodels_2_batch_1_steps_2001/");
+//	dirnames.push_back("16-04-2017_15-54-58_2__v_0_n_0_tb_0_pretrain_1000_fR_100_nbR_2_nbB_1_nmodels_2_batch_1_steps_2001/");
+//	dirnames.push_back("16-04-2017_17-40-12_2__v_5_n_5_tb_5_pretrain_0_fR_100_nbR_2_nbB_1_nmodels_2_batch_1_steps_2001/");
+//	dirnames.push_back("16-04-2017_18-43-14_2__v_5_n_5_tb_10_pretrain_0_fR_100_nbR_2_nbB_1_nmodels_2_batch_1_steps_2001/");
 
 //	dirnames.push_back("01-04-2017_01-37-02_v_20_n_20_tb_20_pretrain_100_fR_100_nbR_0_nbB_1/");
 //	dirnames.push_back("01-04-2017_01-42-09_v_20_n_20_tb_20_pretrain_100_fR_100_nbR_0_nbB_1/");
@@ -174,9 +178,9 @@ int main(){
 
 
 	for (int i=0; i<NUMACTIONS; i++){
-		gp << "set xrange [0:1000]\nset yrange [0:1]\n";
+		gp << "set xrange [0:1000]\nset yrange [-0:0.2]\n";
 		gp << "set title '" << actions[i] << "'\n";
-		gp << "set terminal x11 "<< i <<" \n";
+		gp << "set terminal x11 noenhanced "<< i <<" \n";
 		gp << "plot";
 		for (auto dirname: dirnames){
 			name = basedir+dirname+"model_acc_";
@@ -209,7 +213,7 @@ int main(){
 		gp << std::endl;
 	}
 
-	gp << "set xrange [0:1000]\nset yrange [0:1]\n";
+	gp << "set xrange [0:1000]\nset yrange [-0:0.2]\n";
 	gp << "set title 'global model'\n";
 	gp << "set terminal x11 "<< NUMACTIONS <<" \n";
 	gp << "plot";
@@ -253,7 +257,7 @@ int main(){
 	gp << std::endl;
 
 
-	gp << "set xrange [0:10000]\nset yrange [0:1]\n";
+	gp << "set xrange [0:1000]\nset yrange [-0:0.2]\n";
 	gp << "set title 'Reward model error'\n";
 	gp << "set terminal x11 "<< NUMACTIONS+1 <<" \n";
 	gp << "plot";
@@ -287,41 +291,41 @@ int main(){
 	gp << std::endl;
 
 
-	for (int i=0; i<numComp; i++){
-		gp << "set xrange [0:1000]\nset yrange [0:1]\n";
-		gp << "set title 'component "+std::to_string(i)+"'\n";
-		gp << "set terminal x11 "<< NUMACTIONS+1+i <<" \n";
-		gp << "plot";
-		for (auto dirname: dirnames){
-			name = basedir+dirname+"component_acc_";
-			std::vector<float> graph;
-			std::vector<int> x_axis;
-
-			ifs.open(name+std::to_string(i)+".ser");
-			boost::archive::text_iarchive graph_archive(ifs);
-			graph_archive & graph;
-			ifs.close();
-			ifs.clear();
-
-			ifs.open(basedir+dirname+"x_axis.ser");
-			boost::archive::text_iarchive axis_archive(ifs);
-			axis_archive & x_axis;
-			ifs.close();
-			ifs.clear();
-
-			std::vector<float> num_trials;
-			ifs.open(basedir+dirname+"num_trials.ser");
-			boost::archive::text_iarchive num_trials_archive(ifs);
-			num_trials_archive & num_trials;
-			ifs.close();
-			ifs.clear();
-
-			auto res = postproc(graph,x_axis,num_trials,alpha);
-
-			gp << gp.file1d(res) << "with lines title '"<< dirname <<"',";
-		}
-		gp << std::endl;
-	}
+//	for (int i=0; i<numComp; i++){
+//		gp << "set xrange [0:1000]\nset yrange [0:1]\n";
+//		gp << "set title 'component "+std::to_string(i)+"'\n";
+//		gp << "set terminal x11 "<< NUMACTIONS+1+i <<" \n";
+//		gp << "plot";
+//		for (auto dirname: dirnames){
+//			name = basedir+dirname+"component_acc_";
+//			std::vector<float> graph;
+//			std::vector<int> x_axis;
+//
+//			ifs.open(name+std::to_string(i)+".ser");
+//			boost::archive::text_iarchive graph_archive(ifs);
+//			graph_archive & graph;
+//			ifs.close();
+//			ifs.clear();
+//
+//			ifs.open(basedir+dirname+"x_axis.ser");
+//			boost::archive::text_iarchive axis_archive(ifs);
+//			axis_archive & x_axis;
+//			ifs.close();
+//			ifs.clear();
+//
+//			std::vector<float> num_trials;
+//			ifs.open(basedir+dirname+"num_trials.ser");
+//			boost::archive::text_iarchive num_trials_archive(ifs);
+//			num_trials_archive & num_trials;
+//			ifs.close();
+//			ifs.clear();
+//
+//			auto res = postproc(graph,x_axis,num_trials,alpha);
+//
+//			gp << gp.file1d(res) << "with lines title '"<< dirname <<"',";
+//		}
+//		gp << std::endl;
+//	}
 
 
 }
